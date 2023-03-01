@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebGL</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+    </style>
+
+    <!-- Leaflet -->
+    <link href="leaflet.css" rel="stylesheet"/>
+    <script src="leaflet.js"></script>
+
+    <!-- Mapbox GL -->
+    <link href="mapbox-gl.css" rel='stylesheet' />
+    <script src="mapbox-gl.js"></script>
+
+</head>
+
+<body style="height: 100%; margin: 0">
+<button id="my-button-01">养老机构</button>
+<button id="my-button-02">长者照护之家</button>
+<button id="my-button-03">老年日间照护机构</button>
+<button id="my-button-04">助餐服务点</button>
+<button id="my-button-05">社区养老服务组织</button>
+<button id="my-button-06">社区综合为老服务中心</button>
+<button id="my-button-07">护理站</button>
+<button id="my-button-08">护理院</button>
+<button id="my-button-09">清空</button>
+<div id="map"></div>
+<div id="container" style="height: 100%"></div>
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="style.css">
+<script src="jquery-1.12.4.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="leaflet-mapbox-gl.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.1/dist/echarts.min.js"></script>
+<script type="text/javascript">
+    var globaldata = undefined;
+    let ads = 'Heeal';
+    var map = L.map('map').setView([31.2303935, 121.4741307], 15);
+    $.get('06-NursingHome.json', function (graph) {
+        globaldata = graph;
+        console.log(globaldata);
+        var markers = new Array();
+        function clickEvent01(event) {
+            for(var i = 0;i<globaldata.length;i++)
+            {
+                if(globaldata[i]['agencyType']==1&&globaldata[i]['longitude']!=null&&globaldata[i]['latitude']!=null)
+                {
+                    let marker = L.marker([globaldata[i]['latitude'],globaldata[i]['longitude']])
+                        .bindPopup(globaldata[i]['agencyName']+"<br>养老机构")
+                        .addTo(map)
+                        .openPopup();
+                    markers.push(marker);
+                }
+            }
+        }
+        $( function() {
+            $("#my-button-01").button();
+            $("#my-button-01").click(clickEvent01);
+        } );
+        function clickEvent02(event) {
+            for(var i = 0;i<globaldata.length;i++)
+            {
+                if(globaldata[i]['agencyType']==2&&globaldata[i]['longitude']!=null&&globaldata[i]['latitude']!=null)
+                {
+                    let marker = L.marker([globaldata[i]['latitude'],globaldata[i]['longitude']])
+                        .bindPopup(globaldata[i]['agencyName']+"<br>长者照护之家")
+                        .addTo(map)
+                        .openPopup();
+                    markers.push(marker);
+                }
+            }
+        }
+        $(function () {
+            $("#my-button-02").button();
+            $("#my-button-02").click(clickEvent02);
+        })
+        function clickEvent03(event) {
+            for(var i = 0;i<globaldata.length;i++)
+            {
+                if(globaldata[i]['agencyType']==3&&globaldata[i]['longitude']!=null&&globaldata[i]['latitude']!=null)
+                {
+                    let marker = L.marker([globaldata[i]['latitude'],globaldata[i]['longitude']])
+                        .bindPopup(globaldata[i]['agencyName']+"<br>老年日间照护机构")
+                        .addTo(map)
+                        .openPopup();
+                    markers.push(marker);
+                }
+            }
+        }
+        $(function () {
+            $("#my-button-03").button();
+            $("#my-button-03").click(clickEvent03);
+        })
+        function clickEvent04(event) {
+            for(var i = 0;i<globaldata.length;i++)
+            {
+                if(globaldata[i]['agencyType']==4&&globaldata[i]['longitude']!=null&&globaldata[i]['latitude']!=null)
+                {
+                    let marker = L.marker([globaldata[i]['latitude'],globaldata[i]['longitude']])
+                        .bindPopup(globaldata[i]['agencyName']+"<br>助餐服务点")
+                        .addTo(map)
+                        .openPopup();
+                    markers.push(marker);
+                }
+            }
+        }
+        $(function () {
+            $("#my-button-04").button();
+            $("#my-button-04").click(clickEvent04);
+        })
+        function clickEvent05(event) {
+            for(var i = 0;i<globaldata.length;i++)
+            {
+                if(globaldata[i]['agencyType']==5&&globaldata[i]['longitude']!=null&&globaldata[i]['latitude']!=null)
+                {
+                    let marker = L.marker([globaldata[i]['latitude'],globaldata[i]['longitude']])
+                        .bindPopup(globaldata[i]['agencyName']+"<br>社区养老服务组织")
+                        .addTo(map)
+                        .openPopup();
+                    markers.push(marker);
+                }
+            }
+        }
+        $(function () {
+            $("#my-button-05").button();
+            $("#my-button-05").click(clickEvent05);
+        })
+        function clickEvent06(event) {
+            for(var i = 0;i<globaldata.length;i++)
+            {
+                if(globaldata[i]['agencyType']==6&&globaldata[i]['longitude']!=null&&globaldata[i]['latitude']!=null)
+                {
+                    let marker = L.marker([globaldata[i]['latitude'],globaldata[i]['longitude']])
+                        .bindPopup(globaldata[i]['agencyName']+"<br>社区综合为老服务中心")
+                        .addTo(map)
+                        .openPopup();
+                    markers.push(marker);
+                }
+            }
+        }
+        $(function () {
+            $("#my-button-06").button();
+            $("#my-button-06").click(clickEvent06);
+        })
+        function clickEvent07(event) {
+            for(var i = 0;i<globaldata.length;i++)
+            {
+                if(globaldata[i]['agencyType']==7&&globaldata[i]['longitude']!=null&&globaldata[i]['latitude']!=null)
+                {
+                    let marker = L.marker([globaldata[i]['latitude'],globaldata[i]['longitude']])
+                        .bindPopup(globaldata[i]['agencyName']+"<br>护理站")
+                        .addTo(map)
+                        .openPopup();
+                    markers.push(marker);
+                }
+            }
+        }
+        $(function () {
+            $("#my-button-07").button();
+            $("#my-button-07").click(clickEvent07);
+        })
+        function clickEvent08(event) {
+            for(var i = 0;i<globaldata.length;i++)
+            {
+                if(globaldata[i]['agencyType']==8&&globaldata[i]['longitude']!=null&&globaldata[i]['latitude']!=null)
+                {
+                    let marker = L.marker([globaldata[i]['latitude'],globaldata[i]['longitude']])
+                        .bindPopup(globaldata[i]['agencyName']+"<br>护理院")
+                        .addTo(map)
+                        .openPopup();
+                    markers.push(marker);
+                }
+            }
+        }
+        $(function () {
+            $("#my-button-08").button();
+            $("#my-button-08").click(clickEvent08);
+        })
+        function clickEvent09(event) {
+            console.log(markers);
+            for(var i=0;i<markers.length;i++)
+            {
+                map.removeLayer(markers[i]);
+                console.log(i);
+            }
+            alert('所有数据已清空！');
+        }
+        $(function () {
+            $("#my-button-09").button();
+            $("#my-button-09").click(clickEvent09);
+        })
+        var gl = L.mapboxGL({
+            accessToken: 'no-token',
+            // get your own MapTiler token at https://cloud.maptiler.com/ or use MapBox style
+            style: 'https://api.maptiler.com/maps/topo/style.json?key=gbetYLSD5vR8MdtZ88AQ'
+        }).addTo(map);
+    });
+
+</script>
+</body>
+</html>

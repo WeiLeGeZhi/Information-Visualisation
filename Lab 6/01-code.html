@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebGL</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      html, body, #map {
+        width: 800px;
+        height: 600px;
+        margin: 0;
+      }
+    </style>
+
+    <!-- Leaflet -->
+    <link href="leaflet.css" rel="stylesheet"/>
+    <script src="leaflet.js"></script>
+
+    <!-- Mapbox GL -->
+    <link href="mapbox-gl.css" rel='stylesheet' />
+    <script src="mapbox-gl.js"></script>
+
+</head>
+
+<body>
+<div id="map"></div>
+
+<script src="leaflet-mapbox-gl.js"></script>
+<script>
+var map = L.map('map').setView([38.912753, -77.032194], 15);
+
+L.marker([31.2279804,121.4060842])
+    .bindPopup("<b>East China Normal University</b><br>My alma mater.")
+    .addTo(map)
+    .openPopup();
+
+var gl = L.mapboxGL({
+    accessToken: 'no-token',
+    // get your own MapTiler token at https://cloud.maptiler.com/ or use MapBox style
+    style: 'https://api.maptiler.com/maps/topo/style.json?key=gbetYLSD5vR8MdtZ88AQ'
+}).addTo(map);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+	<meta charset="utf-8">
+	<title>DataVis_Practice_02</title>
+</head>
+<body style='height: 100%; margin: 0'>
+
+<!-- 载入D3库 -->
+<script src="d3.v3.min.js"></script>
+
+<!--
+   一个画布
+   画布相关代码参考：https://www.w3school.com.cn/html5/html_5_canvas.asp
+-->
+<canvas id="myCanvas" width="690" height="457" style="border:1px solid #c3c3c3;">
+	Your browser does not support the canvas element.
+</canvas>
+<div id='container' style='height: 100%'></div>
+<script type='text/javascript' src='echarts.min.js'></script>
+<script type='text/javascript' src='echarts-gl.min.js'></script>
+<script type='text/javascript' src='ecStat.min.js'></script>
+<script type='text/javascript' src='dataTool.min.js'></script>
+<script type="text/javascript">
+
+	// 练习1文件操作示例代码
+	d3.csv("02-AQIData.csv", function(dat) {
+		//此文件载入操作是异步，以下代码在文件完全载入后触发
+	});
+
+	// 练习2载入图片示例代码
+	var img = new Image();
+	img.src = 'images/07.jpg';
+	img.onload=function(){
+		var context = document.getElementById('myCanvas').getContext('2d');
+		context.drawImage(img, 0, 0);
+
+		// data中保存了图片所有像素的颜色信息，每个像素的RGBA信息占数组中4位
+		// RGBA为像素的红色、绿色、蓝色、透明度四个分量
+		var data = context.getImageData(0, 0, 690, 457).data;
+		let pn = 315330;//pixelnumber
+		let cn = 3;//clusternumber
+		let R = new Array(pn);
+		let G = new Array(pn);
+		let B = new Array(pn);
+		let Group = new Array(pn);
+		for(var i=0;i<pn;i++)
+		{
+			R[i]=data[4*(i)];
+		}
+		for(var i=0;i<pn;i++)
+		{
+			G[i]=data[4*(i)+1];
+		}
+		for(var i=0;i<pn;i++)
+		{
+			B[i]=data[4*(i)+2];
+		}
+		let Rba1 = Math.floor(Math.random()*255);
+		let Rba2 = Math.floor(Math.random()*255);
+		let Rba3 = Math.floor(Math.random()*255);
+		let Gba1 = Math.floor(Math.random()*255);
+		let Gba2 = Math.floor(Math.random()*255);
+		let Gba3 = Math.floor(Math.random()*255);
+		let Bba1 = Math.floor(Math.random()*255);
+		let Bba2 = Math.floor(Math.random()*255);
+		let Bba3 = Math.floor(Math.random()*255);
+		let NewRba1 = 0;
+		let NewRba2 = 0;
+		let NewRba3 = 0;
+		let NewGba1 = 0;
+		let NewGba2 = 0;
+		let NewGba3 = 0;
+		let NewBba1 = 0;
+		let NewBba2 = 0;
+		let NewBba3 = 0;
+		let No1 = 0;
+		let No2 = 0;
+		let No3 = 0;
+		let Alter = 10000;
+		let a = 0;
+		let b = 0;
+		let c = 0;
+		let d = 0;
+		for(var i = 0;i<R.length;i++)
+		{
+			a = Math.abs(R[i]-Rba1)*Math.abs(R[i]-Rba1)+Math.abs(G[i]-Gba1)*Math.abs(G[i]-Gba1)+Math.abs(B[i]-Bba1)*Math.abs(B[i]-Bba1);
+			b = Math.abs(R[i]-Rba2)*Math.abs(R[i]-Rba2)+Math.abs(G[i]-Gba2)*Math.abs(G[i]-Gba2)+Math.abs(B[i]-Bba2)*Math.abs(B[i]-Bba2);
+			c = Math.abs(R[i]-Rba3)*Math.abs(R[i]-Rba3)+Math.abs(G[i]-Gba3)*Math.abs(G[i]-Gba3)+Math.abs(B[i]-Bba3)*Math.abs(B[i]-Bba3);
+			if(a<b)
+			{
+				d=a;
+			}
+			else
+			{
+				d = b;
+			}
+			if(d>c)
+			{
+				d=c;
+			}
+			if (d==a)
+			{
+				Group[i]=1;
+				NewRba1+=R[i];
+				NewGba1+=G[i];
+				NewBba1+=B[i];
+				No1++;
+			}
+			else if(d==b)
+			{
+				Group[i]=2;
+				NewRba2+=R[i];
+				NewGba2+=G[i];
+				NewBba2+=B[i];
+				No2++;
+			}
+			else
+			{
+				Group[i]=3;
+				NewRba3+=R[i];
+				NewGba3+=G[i];
+				NewBba3+=B[i];
+				No3++;
+			}
+		}
+		Rba1=NewRba1/No1;
+		Gba1=NewGba1/No1;
+		Bba1=NewBba1/No1;
+		Rba2=NewRba2/No2;
+		Gba2=NewGba2/No2;
+		Bba2=NewBba2/No2;
+		Rba3=NewRba3/No3;
+		Gba3=NewGba3/No3;
+		Bba3=NewBba3/No3;
+		let counter = 0;
+		while (Alter>0)
+		{
+			Alter = 0;
+			NewRba1 = 0;
+			NewRba2 = 0;
+			NewRba3 = 0;
+			NewGba1 = 0;
+			NewGba2 = 0;
+			NewGba3 = 0;
+			NewBba1 = 0;
+			NewBba2 = 0;
+			NewBba3 = 0;
+			No1 = 0;
+			No2 = 0;
+			No3 = 0;
+			for(var i = 0;i<R.length;i++)
+			{
+				a = Math.abs(R[i]-Rba1)*Math.abs(R[i]-Rba1)+Math.abs(G[i]-Gba1)*Math.abs(G[i]-Gba1)+Math.abs(B[i]-Bba1)*Math.abs(B[i]-Bba1);
+				b = Math.abs(R[i]-Rba2)*Math.abs(R[i]-Rba2)+Math.abs(G[i]-Gba2)*Math.abs(G[i]-Gba2)+Math.abs(B[i]-Bba2)*Math.abs(B[i]-Bba2);
+				c = Math.abs(R[i]-Rba3)*Math.abs(R[i]-Rba3)+Math.abs(G[i]-Gba3)*Math.abs(G[i]-Gba3)+Math.abs(B[i]-Bba3)*Math.abs(B[i]-Bba3);
+				if(a<b)
+				{
+					d=a;
+				}
+				else
+				{
+					d = b;
+				}
+				if(d>c)
+				{
+					d=c;
+				}
+				if (d==a)
+				{
+					if(Group[i]!=1)
+					{
+						Alter++;
+					}
+					Group[i]=1;
+					NewRba1+=R[i];
+					NewGba1+=G[i];
+					NewBba1+=B[i];
+					No1++;
+				}
+				else if(d==b)
+				{
+					if(Group[i]!=2)
+					{
+						Alter++;
+					}
+					Group[i]=2;
+					NewRba2+=R[i];
+					NewGba2+=G[i];
+					NewBba2+=B[i];
+					No2++;
+				}
+				else
+				{
+					if(Group[i]!=3)
+					{
+						Alter++;
+					}
+					Group[i]=3;
+					NewRba3+=R[i];
+					NewGba3+=G[i];
+					NewBba3+=B[i];
+					No3++;
+				}
+			}
+			Rba1=NewRba1/No1;
+			Gba1=NewGba1/No1;
+			Bba1=NewBba1/No1;
+			Rba2=NewRba2/No2;
+			Gba2=NewGba2/No2;
+			Bba2=NewBba2/No2;
+			Rba3=NewRba3/No3;
+			Gba3=NewGba3/No3;
+			Bba3=NewBba3/No3;
+			counter++;
+		}
+		console.log(counter);
+		let color1 = `rgb(${Rba1},${Gba1},${Bba1})`;
+		let color2 = `rgb(${Rba2},${Gba2},${Bba2})`;
+		let color3 = `rgb(${Rba3},${Gba3},${Bba3})`;
+		var dom = document.getElementById('container');
+		var myChart = echarts.init(dom, null, {
+			renderer: 'canvas',
+			useDirtyRect: false
+		});
+		var app = {};
+
+		var option;
+
+		option = {
+			title: {
+				text: '《信息可视化》大作业————图片像素颜色聚类',
+				subtext: '温兆和 10205501432',
+				left: 'center'
+			},
+			tooltip: {
+				trigger: 'item'
+			},
+			legend: {
+				orient: 'vertical',
+				left: 'left'
+			},
+			series: [
+				{
+					name: 'Access From',
+					type: 'pie',
+					radius: '50%',
+					data: [
+						{ value: No1, name: '第一类' ,itemStyle:{color:color1}},
+						{ value: No2, name: '第二类' ,itemStyle:{color:color2}},
+						{ value: No3, name: '第三类' ,itemStyle:{color:color3}},
+					],
+					emphasis: {
+						itemStyle: {
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(0, 0, 0, 0.5)'
+						}
+					}
+				}
+			]
+		};
+
+		if (option && typeof option === 'object') {
+			myChart.setOption(option);
+		}
+
+		window.addEventListener('resize', myChart.resize);
+	}
+
+</script>
+
+</body>
+</html>

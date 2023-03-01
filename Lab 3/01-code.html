@@ -1,0 +1,66 @@
+<!DOCTYPE html> 
+<html style='height: 100%'>    
+<head>        
+    <meta charset='utf-8'>    
+</head>    
+<body style='height: 100%; margin: 0'>        
+    <div id='container' style='height: 100%'></div>        
+    <script type='text/javascript' src='echarts.min.js'></script>        
+    <script type='text/javascript' src='echarts-gl.min.js'></script>        
+    <script type='text/javascript' src='ecStat.min.js'></script>        
+    <script type='text/javascript' src='dataTool.min.js'></script> 
+    <script type="text/javascript">
+
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+var categoryData = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+var barData = [120, 200, 150, 80, 70, 110, 130];
+
+// 实践课3-练习1，请编写冒泡排序代码，实现对七天数据的排序，并在柱状图中正确显示
+function BubbleSort(arr1,arr2){
+    for(var i=0;i<arr1.length;i++)
+    {
+        for(var j = i;j<arr1.length;j++)
+        {
+            if(arr1[i]>arr1[j])
+            {
+                let cc = arr1[i];
+                arr1[i]=arr1[j];
+                arr1[j]=cc;
+
+                let dd = arr2[i];
+                arr2[i]=arr2[j];
+                arr2[j]=dd;
+            }
+        }
+    }
+}
+
+BubbleSort(barData,categoryData)
+
+option = null;
+option = {
+    xAxis: {
+        type: 'category',
+        data: categoryData
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: barData,
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+            color: 'rgba(220, 220, 220, 0.8)'
+        }
+    }]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>

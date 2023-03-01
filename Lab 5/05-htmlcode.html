@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>05-Leaflet</title>
+    <link rel="stylesheet" href="leaflet.css"/>
+    <script src="leaflet.js"></script>
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		.leaflet-container {
+			height: 400px;
+			width: 600px;
+			max-width: 100%;
+			max-height: 100%;
+		}
+	</style>
+</head>
+<body>
+
+<div id="map" style="width: 800px; height: 600px;"></div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.1/dist/echarts.min.js"></script>
+<script type="text/javascript">
+	$.get('tsconfig.json', function (graph) {
+		console.log(graph.length);
+		var map = L.map('map').setView([31.2304610, 121.4737010], 13);
+
+		var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 19,
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		}).addTo(map);
+
+		var marker = L.marker([31.229573, 121.401501]).addTo(map)
+				.bindPopup('<b>East China Normal University</b><br />My alma mater.').openPopup();
+
+		for(var i = 0;i<graph.length;i=i+20)
+		{
+			var marker = L.marker([graph[i]['lat'], graph[i]['lng']]).addTo(map)
+					.bindPopup('<b>BE CAREFUL!</b><br />COVID-19').openPopup();
+		}
+
+		map.on('click', onMapClick);
+	});
+</script>
+
+
+
+</body>
+</html>

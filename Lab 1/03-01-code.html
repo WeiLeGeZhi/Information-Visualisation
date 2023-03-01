@@ -1,0 +1,85 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=pie-simple&code=PYBwLglsB2AEC8sDeAoWtJgDYFMBcya6GOAHmAQOSBQDIIfyg9gaD3yoGORgaMqDQDIH_Rg0F6Bm2oPiugFz1A5X6AwJUDAepQA0RdAGcArgCMwZCrEqBKO0BiioBiVWAEYADACYjAVnNGDAFgDMJ6bNi4AZusoBjHNFUAnSiIAXxl0MGBgLEgQAlRiDD8IAHMknD8qCFUAW0D0EKJcVOgAE1jnYESfDwA3NMhPAEMsJ3i3Dzbc2Hz5NIgcOQIAbWc4-NhoBqz8DQBBT285OVgAMT9gHNCxsABPEGnKED6Wsb8G4ogFAY0rAFJj-OKGsAah53ikWGqmhWmbKXHJvszAYAJzCShdTZjZCfb7TEwAdn-EymVDMZnBkLexA-XywPwI5mRgLRpgMmO60JheIJhmJqI06JMFKhxAAuqz0DgsiAABYNOQQK6jaGZbkAZR2uDKVOIcn5xWAAHcAEL49KGIycsbys7KgDyrlcchwYAAGgQtdj4rrFUqAMKRCpUPxJJQNAAUWtg3t9ADpzABKTrQoLYsPxCOwNkoIIAbiAA
+	Please be aware that this chart is not an official demo of Apache ECharts but is made by user-generated code.
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/china.js"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    option = {
+  title: {
+    text: '《信息可视化》课程学生年级分布',
+    subtext: '温兆和 10205501432',
+    left: 'center'
+  },
+  tooltip: {
+    trigger: 'item'
+  },
+  legend: {
+    orient: 'vertical',
+    left: 'left'
+  },
+  series: [
+    {
+      name: 'Access From',
+      type: 'pie',
+      radius: '50%',
+      data: [
+        { value: 4, name: '2019级' },
+        { value: 27, name: '2020级' },
+        { value: 5, name: '2021级' },
+        { value: 1, name: '2022级' },
+      ],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        }
+      }
+    }
+  ]
+};
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

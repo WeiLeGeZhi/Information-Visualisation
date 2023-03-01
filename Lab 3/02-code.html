@@ -1,0 +1,64 @@
+<!DOCTYPE html> 
+<html style='height: 100%'>    
+<head>        
+    <meta charset='utf-8'>    
+</head>    
+<body style='height: 100%; margin: 0'>        
+    <div id='container' style='height: 100%'></div>        
+    <script type='text/javascript' src='echarts.min.js'></script>        
+    <script type='text/javascript' src='echarts-gl.min.js'></script>        
+    <script type='text/javascript' src='ecStat.min.js'></script>        
+    <script type='text/javascript' src='dataTool.min.js'></script>
+    <script src="d3.v3.min.js"></script>
+    <script type="text/javascript">
+
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+
+// 实践课3-练习2：
+// 1. 载入AQI数据，并用散点图呈现
+// 2. 将各空气质量（AQI）值映射到 [0, 100]之间
+// 3. 处理后的数据用散点图显示，AQI的值用散点大小体现
+d3.csv("02-AQIData.csv", function(data) {
+
+let maximum = 1;
+let minimum = 999;
+for(var i=0;i<2845;i++)
+{
+    if(data[i]['aqi']>maximum)
+    {
+        maximum = data[i]['aqi'];
+    }
+    if(data[i]['aqi']<minimum)
+    {
+        minimum = data[i]['aqi'];
+    }
+}
+let handledData = [];
+for(var i=0;i<2845;i++)
+{
+    handledData.push([data[i]['lng'],data[i]['lan'],(data[i]['aqi']-minimum)*100/(maximum-minimum)]);
+}
+
+option = {
+    xAxis: {},
+    yAxis: {},
+    series: [{
+        symbolSize: function(val) {
+            //console.log(val);
+            return val[2];
+        },
+        data: handledData,
+        type: 'scatter'
+    }]
+};
+
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+});
+       </script>
+   </body>
+</html>
